@@ -1,16 +1,11 @@
-// CS Assistant Chatbot - Backend Server
-// Deployment: Set root directory to "backend" on Render
-// Build command on Render: cd ../frontend && npm install && npm run build
-
 require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
-const path = require("path");
 const OpenAI = require("openai");
 
 const app = express();
 app.use(express.json());
-app.use(cors());
+app.use(cors({ origin: process.env.FRONTEND_URL || "*" }));
 
 // Initialize OpenAI client
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
@@ -39,17 +34,8 @@ app.post("/api/chat", async (req, res) => {
     res.json({ reply });
   } catch (err) {
     console.error("OpenAI error:", err.message);
-    res.status(500).json({ error: "Failed to get response from OpenAI." });
+    res.status(500).json({ error: "Failed to get response from Rohit's AI. Please try again." });
   }
-});
-
-// Serve React frontend build
-// Run "npm run build" inside /frontend before starting the server locally
-app.use(express.static(path.join(__dirname, "../frontend/build")));
-
-// Catch-all: serve index.html for any non-API route (React Router support)
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "../frontend/build", "index.html"));
 });
 
 const PORT = process.env.PORT || 5000;
