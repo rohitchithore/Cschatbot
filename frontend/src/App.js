@@ -3,7 +3,7 @@ import "./App.css";
 
 export default function App() {
   const [messages, setMessages] = useState([
-    { role: "bot", text: "Hello! I'm your CS Assistant. Ask me anything about Indian Company Law." },
+    { role: "bot", text: "Hello! I'm Rohit's AI. Ask me anything about Indian Company Law." },
   ]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
@@ -25,7 +25,8 @@ export default function App() {
 
     try {
       // Calls backend using relative path — works both locally (via proxy) and in production
-      const res = await fetch("/api/chat", {
+      const API = process.env.REACT_APP_API_URL || "";
+      const res = await fetch(`${API}/api/chat`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: text }),
@@ -51,7 +52,7 @@ export default function App() {
   return (
     <div className="app">
       <header className="header">
-        <h1>⚖️ CS Assistant Chatbot</h1>
+        <h1>⚖️ Rohit's AI</h1>
         <p>Expert guidance on Indian Company Law &amp; Secretarial Practice</p>
       </header>
 
