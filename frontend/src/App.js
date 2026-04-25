@@ -53,23 +53,27 @@ export default function App() {
     <div className="app">
       <header className="header">
         <h1>⚖️ Rohit's AI</h1>
+        <div className="dhruvi-badge">✨ Specially built for Dhruvi 💕</div>
         <p>Expert guidance on Indian Company Law &amp; Secretarial Practice</p>
       </header>
 
       <div className="chat-box">
         {messages.map((msg, i) => (
           <div key={i} className={`message ${msg.role}`}>
+            {msg.role === "bot" && <div className="bot-avatar">⚖️</div>}
             <span className="bubble">{msg.text}</span>
           </div>
         ))}
         {loading && (
           <div className="message bot">
-            <span className="bubble typing">Thinking…</span>
+            <div className="bot-avatar">⚖️</div>
+            <span className="bubble typing">Thinking</span>
           </div>
         )}
         <div ref={bottomRef} />
       </div>
 
+      <div className="footer">Made with <span>♥</span> for Dhruvi</div>
       <div className="input-area">
         <textarea
           rows={2}
