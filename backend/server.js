@@ -2,19 +2,29 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const path = require("path");
-const { GoogleGenerativeAI } = require("@google/generative-ai");
+const OpenAI = require("openai");
 
 const app = express();
 app.use(express.json());
 app.use(cors());
 
-// Initialize Gemini client
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+const SYSTEM_PROMPT =
+  "You are an expert Indian Company Secretary. Provide clear, practical and legally aware answers.";
+const MODEL_NAME = process.env.AICREDITS_MODEL || "deepseek/deepseek-chat";
+const apiKey = process.env.AICREDITS_API_KEY || process.env.GEMINI_API_KEY;
+const client = apiKey
+  ? new OpenAI({
+      apiKey,
+      baseURL: "https://api.aicredits.in/v1",
+    })
+  : null;
 
 // POST /api/chat — receives user message, returns AI response
 app.post("/api/chat", async (req, res) => {
-  if (!process.env.GEMINI_API_KEY) {
-    return res.status(500).json({ error: "Gemini API key is not configured." });
+  if (!apiKey || !client) {
+    return res.status(500).json({
+      error: "AICredits API key is not configured.",
+    });
   }
 
   const { message } = req.body;
@@ -23,16 +33,18 @@ app.post("/api/chat", async (req, res) => {
   }
 
   try {
-    const model = genAI.getGenerativeModel({
-      model: "gemini-2.0-flash",
-      systemInstruction: "You are an expert Indian Company Secretary. Provide clear, practical and legally aware answers.",
+    const completion = await client.chat.completions.create({
+      model: MODEL_NAME,
+      messages: [
+        { role: "system", content: SYSTEM_PROMPT },
+        { role: "user", content: message },
+      ],
     });
-
-    const result = await model.generateContent(message);
-    const reply = result.response.text();
+    const reply =
+      completion.choices?.[0]?.message?.content || "No response received.";
     res.json({ reply });
   } catch (err) {
-    console.error("Gemini error:", err.message);
+    console.error("AICredits error:", err.message);
     res.status(500).json({ error: "Failed to get response from Rohit's AI. Please try again." });
   }
 });
