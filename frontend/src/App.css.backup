@@ -28,24 +28,22 @@ body {
   overflow: hidden;
 }
 
+/* Header */
 .header {
   background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
   color: #fff;
   padding: 18px 24px;
+  text-align: center;
   position: relative;
 }
 
-.header-bar {
+.header-top {
   display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 16px;
-  margin-bottom: 8px;
-}
-
-.brand-lockup {
-  flex: 1;
-  text-align: center;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 6px;
 }
 
 .header h1 {
@@ -58,7 +56,6 @@ body {
   font-size: 0.8rem;
   opacity: 0.7;
   letter-spacing: 0.2px;
-  text-align: center;
 }
 
 .dhruvi-badge {
@@ -70,7 +67,7 @@ body {
   border-radius: 20px;
   letter-spacing: 0.5px;
   border: 2px solid rgba(255, 255, 255, 0.5);
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  text-shadow: 0 1px 3px rgba(0,0,0,0.2);
   box-shadow: 0 0 14px rgba(255, 60, 172, 0.7), 0 0 30px rgba(255, 60, 172, 0.3);
   white-space: nowrap;
   display: inline-block;
@@ -79,81 +76,11 @@ body {
 }
 
 @keyframes pulse {
-  0%, 100% {
-    box-shadow: 0 0 14px rgba(255, 60, 172, 0.7), 0 0 30px rgba(255, 60, 172, 0.3);
-  }
-  50% {
-    box-shadow: 0 0 22px rgba(255, 60, 172, 1), 0 0 50px rgba(255, 60, 172, 0.6);
-  }
+  0%, 100% { box-shadow: 0 0 14px rgba(255, 60, 172, 0.7), 0 0 30px rgba(255, 60, 172, 0.3); }
+  50% { box-shadow: 0 0 22px rgba(255, 60, 172, 1), 0 0 50px rgba(255, 60, 172, 0.6); }
 }
 
-.auth-slot {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  min-width: 180px;
-}
-
-.auth-actions,
-.signed-out-actions {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-
-.auth-button {
-  padding: 9px 14px;
-  border: none;
-  border-radius: 10px;
-  background: linear-gradient(135deg, #667eea, #764ba2);
-  color: #fff;
-  font-size: 0.85rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: transform 0.15s ease, opacity 0.15s ease, box-shadow 0.15s ease;
-  box-shadow: 0 6px 16px rgba(102, 126, 234, 0.3);
-}
-
-.auth-button:hover {
-  opacity: 0.95;
-  transform: translateY(-1px);
-}
-
-.auth-button-ghost {
-  background: rgba(255, 255, 255, 0.12);
-  border: 1px solid rgba(255, 255, 255, 0.22);
-  box-shadow: none;
-}
-
-.user-chip {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-left: auto;
-}
-
-.user-copy {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  line-height: 1.2;
-  min-width: 0;
-}
-
-.user-label {
-  font-size: 0.7rem;
-  opacity: 0.7;
-}
-
-.user-copy strong {
-  font-size: 0.82rem;
-  font-weight: 600;
-  max-width: 180px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
+/* Chat area */
 .chat-box {
   flex: 1;
   overflow-y: auto;
@@ -167,12 +94,12 @@ body {
 .chat-box::-webkit-scrollbar {
   width: 4px;
 }
-
 .chat-box::-webkit-scrollbar-thumb {
   background: #d0d5e8;
   border-radius: 4px;
 }
 
+/* Message rows */
 .message {
   display: flex;
   align-items: flex-end;
@@ -199,6 +126,7 @@ body {
   flex-shrink: 0;
 }
 
+/* Bubbles */
 .bubble {
   max-width: 70%;
   padding: 11px 16px;
@@ -242,35 +170,17 @@ body {
 }
 
 @keyframes blink {
-  0%, 100% {
-    opacity: 0.2;
-  }
-  50% {
-    opacity: 1;
-  }
+  0%, 100% { opacity: 0.2; }
+  50% { opacity: 1; }
 }
 
+/* Input area */
 .input-area {
   display: flex;
   gap: 10px;
   padding: 14px 16px;
   border-top: 1px solid #eaecf5;
   background: #fff;
-}
-
-.signed-out-panel {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 14px;
-  padding: 14px 16px;
-  border-top: 1px solid #eaecf5;
-  background: #fff;
-}
-
-.signed-out-panel p {
-  color: #5d6685;
-  font-size: 0.9rem;
 }
 
 .input-area textarea {
@@ -325,6 +235,7 @@ body {
   cursor: not-allowed;
 }
 
+/* Footer */
 .footer {
   text-align: center;
   font-size: 0.7rem;
@@ -335,34 +246,4 @@ body {
 
 .footer span {
   color: #f5576c;
-}
-
-@media (max-width: 640px) {
-  .header-bar {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .auth-slot {
-    justify-content: center;
-    min-width: 0;
-  }
-
-  .user-chip {
-    margin-left: 0;
-  }
-
-  .user-copy {
-    align-items: center;
-  }
-
-  .signed-out-panel {
-    flex-direction: column;
-    align-items: stretch;
-    text-align: center;
-  }
-
-  .signed-out-actions {
-    justify-content: center;
-  }
 }
