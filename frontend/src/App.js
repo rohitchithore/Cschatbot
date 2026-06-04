@@ -65,7 +65,6 @@ export default function App() {
         <div className="header-bar">
           <div className="brand-lockup">
             <h1>⚖️ Rohit's AI</h1>
-            <div className="dhruvi-badge">✨ Specially built for Dhruvi 💕</div>
           </div>
 
           <div className="auth-slot">
@@ -118,7 +117,7 @@ export default function App() {
       </div>
 
       <div className="footer">
-        Made with <span>♥</span> for Dhruvi
+        &copy; {new Date().getFullYear()} Rohit's AI. All rights reserved.
       </div>
 
       <SignedIn>
