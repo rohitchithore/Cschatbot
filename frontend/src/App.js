@@ -9,6 +9,52 @@ import {
 } from "@clerk/clerk-react";
 import "./App.css";
 
+// SVG Icon Components for Premium Legal-Tech Aesthetic
+const ScalesIcon = () => (
+  <svg className="svg-icon scale-icon" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M12 2v20M17 5H7M4.5 7.5L7 17.5M19.5 7.5L17 17.5M2 22h20M7 5l5-3 5 3" />
+    <path d="M4 17.5a3 3 0 0 0 6 0M14 17.5a3 3 0 0 0 6 0" />
+  </svg>
+);
+
+const BotIcon = () => (
+  <svg className="svg-icon bot-avatar-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M12 2v20M17 5H7M5 7.5L7 14M19 7.5L17 14M2 22h20" />
+    <path d="M5 14a2 2 0 0 0 4 0M15 14a2 2 0 0 0 4 0" />
+  </svg>
+);
+
+const SendIcon = () => (
+  <svg className="svg-icon send-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+    <line x1="22" y1="2" x2="11" y2="13"></line>
+    <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+  </svg>
+);
+
+// Quick-start suggestion cards for Indian Company Law
+const suggestedPrompts = [
+  {
+    title: "Company Incorporation",
+    desc: "Procedure to incorporate a Private Limited Company.",
+    prompt: "What is the procedure for incorporating a Private Limited Company in India?"
+  },
+  {
+    title: "AGM Timelines",
+    desc: "Due dates and rules for holding an Annual General Meeting.",
+    prompt: "What are the rules and due dates for holding an Annual General Meeting (AGM) under the Companies Act 2013?"
+  },
+  {
+    title: "Director Duties",
+    desc: "Key roles and duties of a director in an Indian company.",
+    prompt: "What are the key duties and liabilities of a director under Indian Company Law?"
+  },
+  {
+    title: "OPC Rules",
+    desc: "Compliance rules for One Person Companies (OPC).",
+    prompt: "Can you explain the annual compliance requirements for a One Person Company (OPC) in India?"
+  }
+];
+
 export default function App() {
   const { user } = useUser();
   const [messages, setMessages] = useState([
@@ -64,7 +110,8 @@ export default function App() {
       <header className="header">
         <div className="header-bar">
           <div className="brand-lockup">
-            <h1>⚖️ Rohit's AI</h1>
+            <ScalesIcon />
+            <h1>Rohit's AI</h1>
           </div>
 
           <div className="auth-slot">
@@ -101,15 +148,37 @@ export default function App() {
       <div className="chat-box">
         {messages.map((msg, i) => (
           <div key={i} className={`message ${msg.role}`}>
-            {msg.role === "bot" && <div className="bot-avatar">⚖️</div>}
+            {msg.role === "bot" && <div className="bot-avatar"><BotIcon /></div>}
             <span className="bubble">{msg.text}</span>
           </div>
         ))}
 
         {loading && (
           <div className="message bot">
-            <div className="bot-avatar">⚖️</div>
+            <div className="bot-avatar"><BotIcon /></div>
             <span className="bubble typing">Thinking</span>
+          </div>
+        )}
+
+        {messages.length === 1 && (
+          <div className="suggested-prompts-container">
+            <h3>Quick Start Compliance Prompts</h3>
+            <div className="suggested-prompts-grid">
+              {suggestedPrompts.map((item, idx) => (
+                <button
+                  key={idx}
+                  className="prompt-card"
+                  onClick={() => {
+                    setInput(item.prompt);
+                    // Focus the textarea
+                    document.getElementById("chat-textarea")?.focus();
+                  }}
+                >
+                  <h4>{item.title}</h4>
+                  <p>{item.desc}</p>
+                </button>
+              ))}
+            </div>
           </div>
         )}
 
@@ -123,15 +192,17 @@ export default function App() {
       <SignedIn>
         <div className="input-area">
           <textarea
-            rows={2}
+            id="chat-textarea"
+            rows={1}
             placeholder="Ask a Company Secretary question..."
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={handleKeyDown}
             disabled={loading}
           />
-          <button onClick={sendMessage} disabled={loading || !input.trim()}>
-            Send
+          <button onClick={sendMessage} disabled={loading || !input.trim()} title="Send Message">
+            <SendIcon />
+            <span>Send</span>
           </button>
         </div>
       </SignedIn>
